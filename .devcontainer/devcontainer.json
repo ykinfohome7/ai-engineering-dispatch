@@ -1,0 +1,12 @@
+{
+  "name": "BGDB AI-EMDS development",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {"version": "24"}
+  },
+  "postCreateCommand": "bash scripts/bootstrap.sh",
+  "postStartCommand": "bash scripts/post-start.sh",
+  "forwardPorts": [3100],
+  "portsAttributes": {"3100": {"label": "Paperclip (private)", "onAutoForward": "silent"}},
+  "remoteUser": "vscode"
+}

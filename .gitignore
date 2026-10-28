@@ -147,3 +147,11 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite
+*.sqlite3
+.paperclip/
