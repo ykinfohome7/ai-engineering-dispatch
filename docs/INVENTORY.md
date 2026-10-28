@@ -56,3 +56,15 @@
 - [ ] Register live agents and configure budgets, approvals, authenticated GPT action and Paperclip sync.
 - [ ] Configure protected PostgreSQL secrets, scheduled daily backups and tested restore.
 - [ ] Deploy Tailnet/KSSH/Proxmox only with human approval and secure production monitoring.
+
+## v0.3.0 onboarding
+
+> 🇧🇬 Файловете са добавени; реална Paperclip инсталация не е доказана.
+
+- [x] English/Bulgarian zero-to-first-Issue Quickstart documentation.
+- [x] Doctor checks Node, pnpm, python3, GitHub CLI, submodule, SET/MISSING variables and port 3100.
+- [x] Dry-run-first agent registration with `--apply`, API duplicate protection, USD budgets and tests.
+- [x] Agent task Issue form, three ADRs, Bulgarian Roadmap and Contributing.
+- [x] CI configured for pytest, ShellCheck and YAML lint (green run still to verify).
+- [ ] Live Paperclip agents, authentication, approval enforcement and real budget limits.
+- [ ] GitHub Issue ↔ Paperclip bridge, branch protection, Tailscale/KSSH and Proxmox production checks.

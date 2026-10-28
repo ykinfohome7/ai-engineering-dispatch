@@ -4,13 +4,17 @@
 
 [![GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 [![BGDB AI-EMDS CI](https://github.com/ykinfohome7/ai-engineering-dispatch/actions/workflows/ci.yml/badge.svg)](https://github.com/ykinfohome7/ai-engineering-dispatch/actions/workflows/ci.yml)
-[![Version 0.2.0](https://img.shields.io/badge/version-0.2.0-informational.svg)](VERSION)
+[![Version 0.3.0](https://img.shields.io/badge/version-0.2.0-informational.svg)](VERSION)
 
-**Version:** [VERSION](VERSION) is the canonical version file (currently 0.2.0). **Maintainer:** BGDB.EU. **Български:** [Пълно ръководство](docs/bg/README.md).
+**Version:** [VERSION](VERSION) is the canonical version file (currently 0.3.0). **Maintainer:** BGDB.EU. **Български:** [Пълно ръководство](docs/bg/README.md).
 
-**v0.2.0 (configuration scaffold)** for `ykinfohome7/ai-engineering-dispatch`. ChatGPT/user supplies an engineering task, this lightweight CLI prepares and optionally creates a **Paperclip** issue, and Paperclip manages real AI agent assignment, budgets and approvals. Works first in a private GitHub Codespace; production target is an always-on Proxmox VM using Tailscale and KSSH.
+**v0.3.0 (onboarding scaffold)** for `ykinfohome7/ai-engineering-dispatch`. ChatGPT/user supplies an engineering task, this lightweight CLI prepares and optionally creates a **Paperclip** issue, and Paperclip manages real AI agent assignment, budgets and approvals. Works first in a private GitHub Codespace; production target is an always-on Proxmox VM using Tailscale and KSSH.
 
 > **Current status:** CLI and tests are implemented. Paperclip, agent adapters (Claude Code/Codex), Tailscale/KSSH and a persistent deployment **are not yet installed or connected by this repository**. No shell commands from task descriptions are executed.
+
+**Start here:** [Quickstart (English)](docs/QUICKSTART.md) · [Бърз старт (БГ)](docs/bg/QUICKSTART.md) · [Doctor](scripts/doctor.sh) · [Agent registration](scripts/register-agents.py).
+
+> 🇧🇬 Новото ръководство описва настройка от нулата, без автоматично включване на сървъри.
 
 ## Quickstart (Codespaces)
 
@@ -99,3 +103,11 @@ Repository is **public**. Never commit any credentials. The CLI allows HTTP only
 - GitHub label synchronization and tagged release workflows are added but require GitHub Actions permissions and real runs to validate.
 
 **Note:** The existing `pyproject.toml` package metadata may still display its earlier version; `VERSION` is the release version for v0.2.0 and the package metadata should be synchronized in a later explicitly approved update.
+
+## v0.3.0 onboarding utilities
+
+> 🇧🇬 Новите инструменти не извършват промени без изрично разрешение.
+
+[English Quickstart](docs/QUICKSTART.md) · [Bulgarian Quickstart](docs/bg/QUICKSTART.md) · [Agent task form](.github/ISSUE_TEMPLATE/agent-task.yml) · [Architecture decisions](docs/adr/0001-paperclip-as-dispatcher.md).
+
+`bash scripts/doctor.sh` checks prerequisites, port 3100 and environment variables without revealing secret values. `python3 scripts/register-agents.py` prints a no-network plan; `--apply` explicitly creates missing Paperclip agent records with provisional USD budgets. Real adapter credentials, token ceilings and approval gates must be configured and verified separately.

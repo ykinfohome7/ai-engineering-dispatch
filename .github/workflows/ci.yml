@@ -29,7 +29,28 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Python unit tests
-        run: PYTHONPATH=src python3 -m unittest discover -s tests -v
+      - name: Install pytest and YAML lint
+        run: python3 -m pip install --disable-pip-version-check pytest yamllint
+      - name: Run Python tests with pytest
+        env:
+          PYTHONPATH: src
+        run: python3 -m pytest tests/ -q
+      - name: ShellCheck scripts and infrastructure
+        shell: bash
+        run: |
+          # Проверява скриптовете статично; не изпълнява сървърни операции.
+          sudo apt-get update -qq
+          sudo apt-get install -y shellcheck
+          find scripts infra -type f -name '*.sh' -print0 |
+            xargs -0 shellcheck --severity=warning
+      - name: YAML lint configuration and GitHub files
+        shell: bash
+        run: |
+          # Проверява YAML синтаксиса, без да включва външния Paperclip.
+          find config .github -type f | grep -E '[.]ya?ml
+      - name: Validate Codespaces JSON
+        run: python3 -m json.tool .devcontainer/devcontainer.json > /dev/null
+ |
+            xargs yamllint -d '{extends: relaxed, rules: {line-length: disable, document-start: disable, truthy: disable}}'
       - name: Validate Codespaces JSON
         run: python3 -m json.tool .devcontainer/devcontainer.json > /dev/null

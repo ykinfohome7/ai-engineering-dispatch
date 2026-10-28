@@ -17,6 +17,25 @@ All notable changes are documented here in [Keep a Changelog](https://keepachang
 - Complete Bulgarian guides for the project, architecture and agents.
 - Third-party license notice and VERSION file.
 
+## [0.3.0] - 2026-10-28
+
+> 🇧🇬 Бърз старт, Doctor, регистратор на агенти, ADR и нови тестове.
+
+### Added
+
+> 🇧🇬 Подробни инструкции и безопасни средства за първоначално настройване.
+
+- English and Bulgarian Quickstart documents, environment doctor and agent registration with dry-run by default.
+- Registration unit tests, GitHub Agent task Issue form, three Architecture Decision Records.
+- Bulgarian Roadmap and Contributing guides.
+
+### Changed
+
+> 🇧🇬 CI вече включва pytest, ShellCheck и проверка на YAML.
+
+- Extended CI checks: pytest, ShellCheck for shell scripts, and YAML lint for config and GitHub.
+- Canonical version updated to 0.3.0, inventories refreshed.
+
 ## [0.2.0] - 2026-10-28
 
 > 🇧🇬 Добавени са конфигурации за седем агента, интеграции и примерна инфраструктура.
@@ -48,3 +67,5 @@ All notable changes are documented here in [Keep a Changelog](https://keepachang
 [0.1.0]: https://github.com/ykinfohome7/ai-engineering-dispatch/commits/main/
 
 [0.2.0]: https://github.com/ykinfohome7/ai-engineering-dispatch/releases/tag/v0.2.0
+
+[0.3.0]: https://github.com/ykinfohome7/ai-engineering-dispatch/releases/tag/v0.3.0

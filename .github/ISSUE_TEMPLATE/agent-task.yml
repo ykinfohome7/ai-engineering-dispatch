@@ -1,0 +1,50 @@
+name: "Agent task / Задача за агент"
+description: "New agent task / Нова задача"
+title: "task: "
+labels: ["task"]
+body:
+  - type: markdown
+    attributes:
+      value: "Describe the task without secrets. / Опиши задачата без тайни."
+  - type: input
+    id: title
+    attributes:
+      label: "Title / Заглавие"
+      description: "Short summary / Кратко резюме"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description / Описание"
+      description: "What and why? / Какво и защо?"
+    validations:
+      required: true
+  - type: textarea
+    id: done-when
+    attributes:
+      label: "Done when / Готово когато"
+      description: "Acceptance criteria / Критерии"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent
+    attributes:
+      label: "Agent / Агент"
+      options:
+        - architect
+        - developer-claude-code
+        - developer-codex
+        - reviewer
+        - qa-tester
+        - devops
+        - docs
+    validations:
+      required: true
+  - type: checkboxes
+    id: approval
+    attributes:
+      label: "Approval / Одобрение"
+      options:
+        - label: "Needs human approval / Изисква човешко одобрение"
+          required: false
