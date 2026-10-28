@@ -8,7 +8,7 @@
 
 - [x] Public GitHub repo `ykinfohome7/ai-engineering-dispatch` on `main`, GPL-3.0 and original `.gitignore`/`LICENSE` preserved.
 - [x] Python intake CLI (`roles`, `plan`, `submit` with `--execute`, `doctor`, `list`, `get`) plus local tests.
-- [x] Codespaces definition, CI, agent runbooks, issue template, environment template.
+- [x] Codespaces devcontainer, CI, agent runbooks, task/bug Issue templates, PR template, CODEOWNERS and environment template.
 - [x] Paperclip git submodule pinned to a known upstream commit, not a vendor copy.
 - [ ] Requested `ykinfohome7/paperclip` fork accessible (404 at time of check).
 
@@ -36,8 +36,23 @@
 
 > 🇧🇬 Политиката и документацията са в Git; настройките в реалните услуги предстоят.
 
-- [x] `AGENTS.md`, `CONTRIBUTING.md`, `SECURITY.md`, architecture, inventory, security and operations guides.
-- [x] Issue and PR policy documented; CI includes tests and basic leaked-secret pattern check.
+- [x] `AGENTS.md`, `CONTRIBUTING.md`, `SECURITY.md`, architecture, inventory, security, operations guides, plus full `docs/bg/` documentation and community notices.
+- [x] Issue and PR templates, CODEOWNERS and CI with Python tests and basic leaked-secret pattern check.
 - [ ] Branch protection/ruleset activated in GitHub (not changed by this commit).
 - [ ] GitHub Issue-to-Paperclip sync implemented; currently manual linking.
-- [ ] Live CI run for this commit confirmed; run remains pending until GitHub finishes checks.
+- [ ] Confirm GitHub Actions CI for the newest commit after GitHub runs it.
+
+## Open-source and operational readiness
+
+> 🇧🇬 Проектните файлове са налични, но реалните услуги трябва да бъдат конфигурирани.
+
+- [x] Repository, GPL-3.0 LICENSE, CODE_OF_CONDUCT, CHANGELOG, VERSION and MIT third-party notice.
+- [x] GitHub CI, Issue/PR templates, CODEOWNERS, Dependabot, Paperclip update PR workflow.
+- [x] Devcontainer, upstream Paperclip git submodule and full Bulgarian guides.
+- [ ] Real Claude Code/Codex agents registered and authenticated in Paperclip.
+- [ ] Per-agent budgets, cost ceilings and human approval gates configured and tested.
+- [ ] Tailscale/KSSH session and restart recovery tested on an always-on host.
+- [ ] Proxmox persistent deployment, backups and restore drill completed.
+- [ ] Centralized logs, uptime monitoring, alerts and incident response tested.
+- [ ] Main branch rulesets / required reviewer and CI checks enabled in repository settings.
+- [ ] GitHub Actions PR creation permissions enabled for the Paperclip update workflow.

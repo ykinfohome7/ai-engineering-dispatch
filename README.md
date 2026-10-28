@@ -1,10 +1,20 @@
 # BGDB AI-EMDS — AI Engineering Management & Dispatch System
 
+> 🇧🇬 Инженерен диспечер за GitHub Issues, Paperclip и AI агенти.
+
+[![GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
+[![BGDB AI-EMDS CI](https://github.com/ykinfohome7/ai-engineering-dispatch/actions/workflows/ci.yml/badge.svg)](https://github.com/ykinfohome7/ai-engineering-dispatch/actions/workflows/ci.yml)
+[![Version 0.1.0](https://img.shields.io/badge/version-0.1.0-informational.svg)](VERSION)
+
+**Version:** [VERSION](VERSION) is the canonical version file (currently 0.1.0). **Maintainer:** BGDB.EU. **Български:** [Пълно ръководство](docs/bg/README.md).
+
 Initial **v0.1.0 (MVP)** for `ykinfohome7/ai-engineering-dispatch`. ChatGPT/user supplies an engineering task, this lightweight CLI prepares and optionally creates a **Paperclip** issue, and Paperclip manages real AI agent assignment, budgets and approvals. Works first in a private GitHub Codespace; production target is an always-on Proxmox VM using Tailscale and KSSH.
 
 > **Current status:** CLI and tests are implemented. Paperclip, agent adapters (Claude Code/Codex), Tailscale/KSSH and a persistent deployment **are not yet installed or connected by this repository**. No shell commands from task descriptions are executed.
 
 ## Quickstart (Codespaces)
+
+> 🇧🇬 Бързо стартиране в GitHub Codespaces; портът трябва да остане частен.
 
 1. Open this repository in GitHub Codespaces. The devcontainer adds Python 3.12 and Node 24.
 2. Run `bash scripts/bootstrap.sh` to test the CLI.
@@ -38,6 +48,8 @@ Initial **v0.1.0 (MVP)** for `ykinfohome7/ai-engineering-dispatch`. ChatGPT/user
 
 ## Agent roles
 
+> 🇧🇬 Всеки агент има отделна роля и независим контрол.
+
 | Role | Responsibility | Agent option |
 | --- | --- | --- |
 | Architect | design, decomposition | Claude Code / Codex |
@@ -49,8 +61,28 @@ Initial **v0.1.0 (MVP)** for `ykinfohome7/ai-engineering-dispatch`. ChatGPT/user
 
 ## Security & uptime
 
+> 🇧🇬 Без тайни в Git и без обещание за 24/7 работа от Codespaces.
+
 Repository is **public**. Never commit any credentials. The CLI allows HTTP only on localhost and requires HTTPS + token for remote URLs. Keep Codespaces forwarded ports private. A Codespace automatically stops and cannot keep KSSH/Paperclip running 24/7; move the gateway and service to a Proxmox VM for persistent availability. See [Operations](docs/OPERATIONS.md) and [Architecture](docs/ARCHITECTURE.md).
 
 **Upstream:** [Paperclip](https://github.com/paperclipai/paperclip) — use its documented [Issues API](https://github.com/paperclipai/paperclip/blob/master/docs/api/issues.md).
 
 **License:** GPL-3.0 (existing repository license). Contributions welcome.
+
+## Repository layout and community
+
+> 🇧🇬 Документацията, управлението и инфраструктурата са отделени от външния Paperclip submodule.
+
+| Path | Purpose |
+| --- | --- |
+| [AGENTS.md](AGENTS.md), [agents/](agents/) | Independent AI agent roles and rules |
+| [src/bgdb_dispatch/](src/bgdb_dispatch/) | Python task intake helper |
+| [dispatcher/](dispatcher/) | Paperclip launcher and pinned upstream submodule |
+| [intake/chatgpt/](intake/chatgpt/) | ChatGPT → Issue → Paperclip workflow |
+| [infra/](infra/) | PostgreSQL, Tailscale and Proxmox notes |
+| [docs/](docs/) | Architecture, inventory, operations and security |
+| [docs/bg/](docs/bg/) | Full Bulgarian project, architecture and agent guides |
+| [.github/](.github/) | PR/Issue templates, CODEOWNERS, CI and updates |
+| [VERSION](VERSION), [CHANGELOG.md](CHANGELOG.md) | Current version and changes |
+
+**Community and licenses:** [Contributing](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · [Changelog](CHANGELOG.md) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Security](SECURITY.md) · [Bulgarian guides](docs/bg/README.md). This repository remains GPL-3.0; Paperclip remains MIT. Keep the version badge synchronized with the canonical VERSION file.

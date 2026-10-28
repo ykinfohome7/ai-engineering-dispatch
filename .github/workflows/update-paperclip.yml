@@ -1,0 +1,65 @@
+name: Update Paperclip submodule
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: paperclip-submodule-update
+  cancel-in-progress: false
+
+jobs:
+  update-paperclip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+
+      - name: Check for overlapping Dependabot Paperclip pull requests
+        id: overlap
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          # Не създава втори PR, когато Dependabot вече предлага обновяване на Paperclip.
+          if gh pr list --state open --limit 100 --json title,headRefName \
+            --jq '.[] | select(.headRefName != "chore/update-paperclip") | select((.title | ascii_downcase | contains("paperclip")) or (.headRefName | ascii_downcase | contains("paperclip"))) | .title' \
+            | grep -q .; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update pinned upstream Paperclip revision
+        if: steps.overlap.outputs.skip != 'true'
+        shell: bash
+        run: |
+          # Обновява само gitlink-а на submodule-а; не изменя изходния код на Paperclip.
+          git -C dispatcher/paperclip fetch --no-tags origin master
+          git -C dispatcher/paperclip checkout --detach origin/master
+
+      - name: Create Paperclip update pull request
+        if: steps.overlap.outputs.skip != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ github.token }}
+          branch: chore/update-paperclip
+          delete-branch: true
+          commit-message: "chore: update Paperclip submodule"
+          title: "chore: update Paperclip submodule"
+          body: |
+            ## Update / Обновяване
+
+            > 🇧🇬 Автоматично предложение за нова фиксирана версия на Paperclip.
+
+            Review upstream changes, MIT license, security impact and CI.
+            Independent review is required; never auto-merge this PR.
+          add-paths: |
+            dispatcher/paperclip

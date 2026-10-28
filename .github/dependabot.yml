@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # Проверява GitHub Actions ежеседмично.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:30"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 5
+
+  # Следи Python зависимостите в основната директория.
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: tuesday
+      time: "06:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 5
+
+  # Paperclip може да се обнови и от workflow; не сливайте дублирани PR.
+  - package-ecosystem: gitsubmodule
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 3

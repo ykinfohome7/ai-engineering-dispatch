@@ -155,3 +155,12 @@ vite.config.ts.timestamp-*
 *.sqlite
 *.sqlite3
 .paperclip/
+# Python: байткод, виртуални среди, тестове и пакети.
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.pytest_cache/
+dist/
+*.egg-info/
+# .env вече е включен в Node правилата по-горе.
