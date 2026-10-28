@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "placeholder_only": true,
+  "projects_start_status": "planned",
+  "agent_execution": "disabled_until_credentials_and_approvals_verified",
+  "global_agent_policy": "reuse_existing_seven_agents",
+  "workstreams": [
+    {
+      "id": "netsec",
+      "name": "Networking and Cybersecurity",
+      "description": "UniFi, pfSense, Tailscale and TLS audit work, design and documentation; no live firewall or credential changes without approval.",
+      "lead_agent": "architect",
+      "contributors": [
+        "devops",
+        "developer-codex"
+      ],
+      "review_agent": "reviewer"
+    },
+    {
+      "id": "platform",
+      "name": "Servers, DevOps and AI Infrastructure",
+      "description": "Debian, Proxmox, KSSH, Paperclip, backup restore, monitoring and CI.",
+      "lead_agent": "devops",
+      "contributors": [
+        "developer-claude-code",
+        "qa-tester"
+      ],
+      "review_agent": "reviewer"
+    },
+    {
+      "id": "voice",
+      "name": "Telephony and Communications",
+      "description": "SIP, Kamailio, FusionPBX, FreeSWITCH and UniFi Talk interoperability.",
+      "lead_agent": "architect",
+      "contributors": [
+        "developer-codex",
+        "qa-tester"
+      ],
+      "review_agent": "reviewer"
+    },
+    {
+      "id": "software",
+      "name": "Business Software and ERP",
+      "description": "ERPNext, web applications, APIs, integrations and software testing.",
+      "lead_agent": "developer-claude-code",
+      "contributors": [
+        "developer-codex",
+        "qa-tester",
+        "docs"
+      ],
+      "review_agent": "reviewer"
+    },
+    {
+      "id": "logistics",
+      "name": "Transport and Logistics",
+      "description": "Dispatch workflow, fleet maintenance, compliance research and reports; recommendations only.",
+      "lead_agent": "architect",
+      "contributors": [
+        "developer-claude-code",
+        "docs"
+      ],
+      "review_agent": "reviewer"
+    },
+    {
+      "id": "energy",
+      "name": "Energy, AI and Data Centers",
+      "description": "Technical concepts, feasibility studies, power scenarios, and AI infrastructure.",
+      "lead_agent": "architect",
+      "contributors": [
+        "developer-codex",
+        "docs"
+      ],
+      "review_agent": "reviewer"
+    },
+    {
+      "id": "records",
+      "name": "Research, Official Records and Documentation",
+      "description": "Verification of official records, standards, audit-ready documents and research.",
+      "lead_agent": "docs",
+      "contributors": [
+        "qa-tester",
+        "developer-codex"
+      ],
+      "review_agent": "reviewer"
+    }
+  ]
+}
