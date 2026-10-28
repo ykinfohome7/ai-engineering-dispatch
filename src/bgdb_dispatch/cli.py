@@ -1,4 +1,4 @@
-"""Task intake for Paperclip; writes are opt-in via --execute."""
+"""Прием на задачи към Paperclip, само при изрично --execute."""
 from __future__ import annotations
 
 import argparse

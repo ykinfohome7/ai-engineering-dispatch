@@ -1,36 +1,61 @@
-# Architecture / Архитектура
+# System architecture
+
+> 🇧🇬 ChatGPT приема задачата, GitHub я проследява, Paperclip управлява агентите и ресурсите.
+
+## Target control and execution plane
+
+> 🇧🇬 Схемата показва целевия поток; автоматичният мост GitHub → Paperclip още е TODO.
 
 ```text
-Human / ChatGPT / GitHub (task intake)
-   |
-   +--> BGDB AI-EMDS CLI (`plan`, `submit`, `doctor`, `list`, `get`)
-                     |
-                     +--> Paperclip API (issues, approvals, assignments)
-                                    |
-                                    +--> Architect (planning)
-                                    +--> Developer (Claude Code or Codex)
-                                    +--> Reviewer (human gate)
-                                    +--> QA (tests)
-                                    +--> DevOps (deployment; gated)
-                                    +--> Docs (documentation)
-
-GitHub: source of truth for code, PRs and version history
-Codespaces: disposable development workspace, NOT production uptime
-Proxmox: persistent Paperclip/KSSH/Tailscale in stage two
+    User
+     |
+     v
+ ChatGPT (intake: What / Why / Done when)
+     |
+     v
+ GitHub Issue  -- [manual link for now] -->  Paperclip dispatcher
+     |                                     /    |       \
+     |                              embedded PG      budgets/approvals
+     |                              (phase 1)          |
+     |                                          +------+------+-------+
+     |                                          |      |      |       |
+     |                                      Architect Dev 1  Dev 2  Reviewer
+     |                                          |  (Claude) (Codex)  QA/Docs
+     +------------------------------------------+------+------+-------+
+                                                |
+                                          feat/<issue>-name
+                                                |
+                                             GitHub PR
+                                                |
+                                       independent review + CI
+                                                |
+                                          approved merge
+                                                |
+                                              DevOps
+                                                |
+                                         KSSH (MCP gateway)
+                                                |
+                                          Tailscale / ACL
+                                                |
+                                      authorized servers / Proxmox
 ```
 
-## Existing vs future integration
+## Components and ownership
 
-- Implemented: deterministic role hinting; Paperclip API issue create/read/list; optional agent-ID assignment; human opt-in before creating issues.
-- Provided: Codespace definition, safe start script, nonsecret configuration template, tests.
-- Not implemented: ChatGPT external Paperclip MCP integration, automatic Claude/Codex agent installation, code execution, GitHub PR automation, 24/7 KSSH gateway, live billing, approval automation.
-- Paperclip controls agent orchestration, checkout, review, approval, budgets and governance; don't bypass those by directly executing shell commands from user task text.
-- Recommended policy: Architect -> Developer -> Reviewer -> QA -> human approval -> DevOps -> Docs; configure actual approval rules in the Paperclip UI.
+> 🇧🇬 Използвай един инсталационен път, без дублиране на Paperclip или функциите му.
 
-## Task flow
+- **Intake:** GitHub Issues + optional `src/bgdb_dispatch` Paperclip REST helper. Python helper is **not** a GitHub bridge or agent runner.
+- **Paperclip:** org, issues, agent assignments, approvals, budgets and local embedded PostgreSQL. Source is a pinned upstream submodule.
+- **Agents:** Architect, Developer (Claude Code), Developer 2 (Codex), Reviewer, QA, DevOps, Docs. Configuring real adapters is a manual step.
+- **GitHub:** source control, PRs, branch policy and CI. Enforce protection in GitHub settings.
+- **KSSH/Tailscale:** approved, authenticated private server access. A stopped Codespace cannot be an always-on gateway.
+- **Proxmox:** phase-2 persistent runtime and database; no deployment performed by this scaffold.
 
-1. Run `plan` to view exact JSON intended for submission.
-2. Configure company UUID and optional role/agent UUIDs in the shell, not Git.
-3. Run `submit ... --execute` to create a `todo` issue in Paperclip.
-4. Paperclip assigns/wakes installed agents only when configured and authorized.
-5. Review diffs and tests before deployment. Never store credentials in issue text.
+## Gaps and sequencing
+
+> 🇧🇬 Задачите за свързване, агентите и продукционната миграция остават за отделни Issues.
+
+1. Configure real Paperclip agents and individual spending budgets.
+2. Implement an authenticated, idempotent GitHub Issue ↔ Paperclip issue sync; avoid duplicate tasks and loops.
+3. Protect `main` with mandatory PR review, status checks and human release approvals.
+4. Deploy persistent Paperclip/KSSH/Tailscale on Proxmox with backup and restore tests.

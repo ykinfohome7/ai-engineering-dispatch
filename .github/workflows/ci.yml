@@ -1,0 +1,35 @@
+name: BGDB AI-EMDS CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout including Paperclip submodule
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          persist-credentials: false
+      - name: Secret-pattern guard
+        shell: bash
+        run: |
+          # Проверява файловете ни; не сканира външния submodule или самата CI дефиниция.
+          if grep -RInIE --exclude=ci.yml --exclude-dir=.git --exclude-dir=paperclip \
+            -e '-----BEGIN (OPENSSH |RSA |EC )?PRIVATE KEY-----' \
+            -e 'ghp_[A-Za-z0-9]{12,}' \
+            -e 'sk-[A-Za-z0-9]{12,}' .; then
+            echo 'Potential credential material found' >&2
+            exit 1
+          fi
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python unit tests
+        run: PYTHONPATH=src python3 -m unittest discover -s tests -v
+      - name: Validate Codespaces JSON
+        run: python3 -m json.tool .devcontainer/devcontainer.json > /dev/null

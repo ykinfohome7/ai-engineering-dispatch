@@ -12,13 +12,18 @@ from bgdb_dispatch.roles import ROLES, choose_role
 
 class RoleTests(unittest.TestCase):
     def test_role_registry(self):
-        self.assertEqual(len(ROLES), 6)
+        self.assertEqual(len(ROLES), 7)
 
     def test_routing(self):
         self.assertEqual(choose_role("deploy Tailscale server"), "devops")
         self.assertEqual(choose_role("Add regression tests"), "qa")
         self.assertEqual(choose_role("Write documentation manual"), "docs")
         self.assertEqual(choose_role("random request"), "architect")
+        self.assertEqual(choose_role("Codex implement feature"), "developer_codex")
+
+    def test_codex_agent_assignment(self):
+        with patch.dict(os.environ, {"PAPERCLIP_AGENT_DEVELOPER_CODEX_ID": "codex-agent"}):
+            self.assertEqual(issue_payload("task", "", "developer_codex", "medium")["assigneeAgentId"], "codex-agent")
 
     def test_assignee_not_included_unless_configured(self):
         with patch.dict(os.environ, {}, clear=True):

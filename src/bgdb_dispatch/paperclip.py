@@ -1,7 +1,6 @@
-"""Paperclip API adapter, using only stdlib and documented endpoints.
+"""Paperclip API адаптер; отдалеченият достъп изисква ограничен токен.
 
-Authorization: caller provides a scoped token for authenticated deployments.
-Never expose this adapter as a public unauthenticated HTTP endpoint.
+Не излагай помощника като публична HTTP услуга без удостоверяване.
 """
 from __future__ import annotations
 
@@ -21,7 +20,7 @@ class PaperclipError(RuntimeError):
 
 
 def validate_base_url(base_url: str) -> str:
-    """Refuse insecure remote HTTP and URLs with credentials/query/fragment."""
+    """Отхвърля незащитен HTTP и URL с потребител или параметри."""
     url = urlsplit(base_url)
     if not url.hostname or url.username or url.password or url.query or url.fragment or url.path not in ("", "/"):
         raise ConfigurationError("PAPERCLIP_BASE_URL must be a server origin (no path, userinfo, query or fragment)")

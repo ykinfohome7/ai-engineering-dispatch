@@ -1,0 +1,3 @@
+[submodule "dispatcher/paperclip"]
+	path = dispatcher/paperclip
+	url = https://github.com/paperclipai/paperclip.git

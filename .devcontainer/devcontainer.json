@@ -1,12 +1,15 @@
 {
-  "name": "BGDB AI-EMDS development",
-  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+  "name": "BGDB AI-EMDS — Codespaces",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:24",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": {"version": "24"}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/python:1": {"version": "3.12"}
   },
-  "postCreateCommand": "bash scripts/bootstrap.sh",
+  "postCreateCommand": "npm install -g pnpm@9.15.4 && git submodule update --init --recursive && bash scripts/bootstrap.sh",
   "postStartCommand": "bash scripts/post-start.sh",
   "forwardPorts": [3100],
-  "portsAttributes": {"3100": {"label": "Paperclip (private)", "onAutoForward": "silent"}},
+  "portsAttributes": {
+    "3100": {"label": "Paperclip UI (KEEP PRIVATE)", "onAutoForward": "silent"}
+  },
   "remoteUser": "vscode"
 }
