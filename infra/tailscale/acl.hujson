@@ -1,0 +1,16 @@
+{
+  // Примерна политика: прегледай цялата Tailnet конфигурация преди прилагане.
+  "tagOwners": {
+    "tag:codespace": ["autogroup:owner"],
+    "tag:proxmox": ["autogroup:owner"],
+    "tag:server": ["autogroup:owner"]
+  },
+  // Собственикът и означеният Codespace виждат само SSH на tag:server.
+  "acls": [
+    {
+      "action": "accept",
+      "src": ["autogroup:owner", "tag:codespace"],
+      "dst": ["tag:server:22"]
+    }
+  ]
+}

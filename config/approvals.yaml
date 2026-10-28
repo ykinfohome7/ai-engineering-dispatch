@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "placeholder_only": true,
+  "default_decision": "deny_until_human_approval",
+  "actions": [
+    {
+      "id": "merge_to_main",
+      "required_approvers": 1,
+      "actor": "human",
+      "audit_required": true
+    },
+    {
+      "id": "deploy",
+      "required_approvers": 1,
+      "actor": "human",
+      "audit_required": true
+    },
+    {
+      "id": "delete",
+      "required_approvers": 1,
+      "actor": "human",
+      "audit_required": true
+    },
+    {
+      "id": "server_changes",
+      "required_approvers": 1,
+      "actor": "human",
+      "audit_required": true
+    },
+    {
+      "id": "secret_rotation",
+      "required_approvers": 1,
+      "actor": "human",
+      "audit_required": true
+    }
+  ],
+  "policy_notes": [
+    "Documented policy only; no approval enforcement exists until connected to Paperclip and GitHub rulesets.",
+    "Never infer approval from this file, a bot, or a PR comment."
+  ]
+}

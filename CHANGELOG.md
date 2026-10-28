@@ -17,6 +17,21 @@ All notable changes are documented here in [Keep a Changelog](https://keepachang
 - Complete Bulgarian guides for the project, architecture and agents.
 - Third-party license notice and VERSION file.
 
+## [0.2.0] - 2026-10-28
+
+> 🇧🇬 Добавени са конфигурации за седем агента, интеграции и примерна инфраструктура.
+
+### Added
+
+> 🇧🇬 Създадени са четими от програми настройки, тестове и документация.
+
+- JSON-compatible YAML registry for seven agents, approval classes and example token/USD budgets; Python configuration validator and unit tests.
+- Custom GPT intake instructions and OpenAPI 3.1 GitHub Issue action.
+- KSSH, Claude Code and Codex integration instructions, private Tailscale ACL example.
+- PostgreSQL 16 Compose, 14-day backup script, Proxmox Debian 12 LXC dry-run and restore policy.
+- Monitoring guide, agent report, label-sync workflow and tagged ZIP release workflow.
+- Support and roadmap guides, Bulgarian inventory, security and operations docs.
+
 ## [0.1.0] - 2026-10-28
 
 > 🇧🇬 Първа версия на структурата, агентите и Paperclip интеграцията.
@@ -31,3 +46,5 @@ All notable changes are documented here in [Keep a Changelog](https://keepachang
 
 [Unreleased]: https://github.com/ykinfohome7/ai-engineering-dispatch/commits/main/
 [0.1.0]: https://github.com/ykinfohome7/ai-engineering-dispatch/commits/main/
+
+[0.2.0]: https://github.com/ykinfohome7/ai-engineering-dispatch/releases/tag/v0.2.0

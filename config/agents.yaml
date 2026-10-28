@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "placeholder_only": true,
+  "notes": "Illustrative budgets and permissions; do not enable agents before configuring Paperclip approval gates.",
+  "agents": [
+    {
+      "id": "architect",
+      "role": "system design and issue decomposition",
+      "tool": "paperclip/claude-code",
+      "allowed_actions": [
+        "read_issue",
+        "design",
+        "write_docs",
+        "propose_change",
+        "comment_issue"
+      ],
+      "needs_approval": [
+        "merge_to_main",
+        "server_changes"
+      ],
+      "monthly_budget_usd": 40
+    },
+    {
+      "id": "developer-claude-code",
+      "role": "primary implementation",
+      "tool": "claude-code",
+      "allowed_actions": [
+        "read_issue",
+        "edit_branch",
+        "run_tests",
+        "open_pull_request",
+        "comment_issue"
+      ],
+      "needs_approval": [
+        "merge_to_main",
+        "delete",
+        "secret_rotation"
+      ],
+      "monthly_budget_usd": 100
+    },
+    {
+      "id": "developer-codex",
+      "role": "independent development",
+      "tool": "codex",
+      "allowed_actions": [
+        "read_issue",
+        "edit_branch",
+        "run_tests",
+        "open_pull_request",
+        "comment_issue"
+      ],
+      "needs_approval": [
+        "merge_to_main",
+        "delete",
+        "secret_rotation"
+      ],
+      "monthly_budget_usd": 100
+    },
+    {
+      "id": "reviewer",
+      "role": "independent code and security review",
+      "tool": "paperclip/claude-code",
+      "allowed_actions": [
+        "read_issue",
+        "read_pull_request",
+        "review_pull_request",
+        "comment_issue"
+      ],
+      "needs_approval": [
+        "merge_to_main"
+      ],
+      "monthly_budget_usd": 40
+    },
+    {
+      "id": "qa-tester",
+      "role": "verification and regression tests",
+      "tool": "paperclip/codex",
+      "allowed_actions": [
+        "read_issue",
+        "write_tests",
+        "run_tests",
+        "comment_issue"
+      ],
+      "needs_approval": [
+        "delete",
+        "server_changes"
+      ],
+      "monthly_budget_usd": 40
+    },
+    {
+      "id": "devops",
+      "role": "CI and approved infrastructure operations",
+      "tool": "kssh",
+      "allowed_actions": [
+        "read_issue",
+        "read_server_status",
+        "run_diagnostics",
+        "propose_deployment",
+        "open_pull_request"
+      ],
+      "needs_approval": [
+        "merge_to_main",
+        "deploy",
+        "delete",
+        "server_changes",
+        "secret_rotation"
+      ],
+      "monthly_budget_usd": 80
+    },
+    {
+      "id": "docs",
+      "role": "documentation and runbooks",
+      "tool": "paperclip/claude-code",
+      "allowed_actions": [
+        "read_issue",
+        "write_docs",
+        "open_pull_request",
+        "comment_issue"
+      ],
+      "needs_approval": [
+        "merge_to_main"
+      ],
+      "monthly_budget_usd": 30
+    }
+  ]
+}

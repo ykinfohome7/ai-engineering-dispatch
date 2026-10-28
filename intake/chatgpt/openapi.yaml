@@ -1,0 +1,107 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "BGDB AI-EMDS GitHub Issue Intake",
+    "version": "0.2.0",
+    "description": "Creates GitHub Issues only after the user explicitly approves the proposed title, body and labels."
+  },
+  "servers": [
+    {
+      "url": "https://api.github.com"
+    }
+  ],
+  "paths": {
+    "/repos/ykinfohome7/ai-engineering-dispatch/issues": {
+      "post": {
+        "operationId": "createEngineeringIssue",
+        "summary": "Create an approved engineering task issue",
+        "description": "Requires explicit user confirmation; GitHub token must be configured in the GPT action authentication settings, never embedded in this file.",
+        "security": [
+          {
+            "githubBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "title",
+                  "body",
+                  "labels"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 4,
+                    "maxLength": 240
+                  },
+                  "body": {
+                    "type": "string",
+                    "minLength": 15
+                  },
+                  "labels": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "GitHub Issue created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "number": {
+                      "type": "integer"
+                    },
+                    "html_url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "number",
+                    "html_url"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Not authorized"
+          },
+          "422": {
+            "description": "Invalid Issue fields"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "githubBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "GitHub token"
+      }
+    }
+  }
+}

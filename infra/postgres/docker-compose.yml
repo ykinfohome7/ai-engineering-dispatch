@@ -1,0 +1,25 @@
+name: bgdb-emds-postgres
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    # Паролата се зарежда от игнорирания .env, не се публикува порт.
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-bgdb_emds}
+      POSTGRES_DB: ${POSTGRES_DB:-bgdb_emds}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in ignored .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      # Проверява локално PostgreSQL без извеждане на паролата.
+      test: ["CMD-SHELL", 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"']
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks: [private_db]
+networks:
+  private_db:
+    internal: true
+volumes:
+  postgres_data:

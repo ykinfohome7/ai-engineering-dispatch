@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "placeholder_only": true,
+  "currency": "USD",
+  "global_monthly_limit_usd": 500,
+  "agents": {
+    "architect": {
+      "monthly_token_limit": 600000,
+      "monthly_usd_limit": 40
+    },
+    "developer-claude-code": {
+      "monthly_token_limit": 2000000,
+      "monthly_usd_limit": 100
+    },
+    "developer-codex": {
+      "monthly_token_limit": 2000000,
+      "monthly_usd_limit": 100
+    },
+    "reviewer": {
+      "monthly_token_limit": 600000,
+      "monthly_usd_limit": 40
+    },
+    "qa-tester": {
+      "monthly_token_limit": 600000,
+      "monthly_usd_limit": 40
+    },
+    "devops": {
+      "monthly_token_limit": 900000,
+      "monthly_usd_limit": 80
+    },
+    "docs": {
+      "monthly_token_limit": 600000,
+      "monthly_usd_limit": 30
+    }
+  }
+}

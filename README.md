@@ -4,11 +4,11 @@
 
 [![GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 [![BGDB AI-EMDS CI](https://github.com/ykinfohome7/ai-engineering-dispatch/actions/workflows/ci.yml/badge.svg)](https://github.com/ykinfohome7/ai-engineering-dispatch/actions/workflows/ci.yml)
-[![Version 0.1.0](https://img.shields.io/badge/version-0.1.0-informational.svg)](VERSION)
+[![Version 0.2.0](https://img.shields.io/badge/version-0.2.0-informational.svg)](VERSION)
 
-**Version:** [VERSION](VERSION) is the canonical version file (currently 0.1.0). **Maintainer:** BGDB.EU. **Български:** [Пълно ръководство](docs/bg/README.md).
+**Version:** [VERSION](VERSION) is the canonical version file (currently 0.2.0). **Maintainer:** BGDB.EU. **Български:** [Пълно ръководство](docs/bg/README.md).
 
-Initial **v0.1.0 (MVP)** for `ykinfohome7/ai-engineering-dispatch`. ChatGPT/user supplies an engineering task, this lightweight CLI prepares and optionally creates a **Paperclip** issue, and Paperclip manages real AI agent assignment, budgets and approvals. Works first in a private GitHub Codespace; production target is an always-on Proxmox VM using Tailscale and KSSH.
+**v0.2.0 (configuration scaffold)** for `ykinfohome7/ai-engineering-dispatch`. ChatGPT/user supplies an engineering task, this lightweight CLI prepares and optionally creates a **Paperclip** issue, and Paperclip manages real AI agent assignment, budgets and approvals. Works first in a private GitHub Codespace; production target is an always-on Proxmox VM using Tailscale and KSSH.
 
 > **Current status:** CLI and tests are implemented. Paperclip, agent adapters (Claude Code/Codex), Tailscale/KSSH and a persistent deployment **are not yet installed or connected by this repository**. No shell commands from task descriptions are executed.
 
@@ -86,3 +86,16 @@ Repository is **public**. Never commit any credentials. The CLI allows HTTP only
 | [VERSION](VERSION), [CHANGELOG.md](CHANGELOG.md) | Current version and changes |
 
 **Community and licenses:** [Contributing](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · [Changelog](CHANGELOG.md) · [Third-party notices](THIRD_PARTY_NOTICES.md) · [Security](SECURITY.md) · [Bulgarian guides](docs/bg/README.md). This repository remains GPL-3.0; Paperclip remains MIT. Keep the version badge synchronized with the canonical VERSION file.
+
+## v0.2.0 machine-readable configuration and integrations
+
+> 🇧🇬 Примерни политики, интеграции и инфраструктура — без автоматично прилагане на разрешения.
+
+- [Agent registry](config/agents.yaml), [approval actions](config/approvals.yaml), [budgets](config/budgets.yaml) and the validated [Python config reader](src/bgdb_dispatch/config.py). Placeholder budgets are not enabled Paperclip limits.
+- [Custom GPT instructions](intake/chatgpt/INSTRUCTIONS.md) and [OpenAPI GitHub Issue action](intake/chatgpt/openapi.yaml); create an Issue only after explicit user confirmation.
+- [KSSH](integrations/kssh/README.md), [Claude Code](integrations/claude-code/README.md), [Codex](integrations/codex/README.md) and [Tailscale ACL example](infra/tailscale/acl.hujson).
+- [PostgreSQL Compose](infra/postgres/docker-compose.yml), [database backup](infra/postgres/backup.sh), [Proxmox LXC dry run](infra/proxmox/create-lxc.sh) and [backup plan](infra/proxmox/backup.md).
+- [Monitoring](monitoring/README.md), [agent report](scripts/agent-report.sh), [Roadmap](ROADMAP.md), [Support](SUPPORT.md) and [Bulgarian operations](docs/bg/OPERATIONS.md), [inventory](docs/bg/INVENTORY.md), [security](docs/bg/SECURITY-STANDARDS.md).
+- GitHub label synchronization and tagged release workflows are added but require GitHub Actions permissions and real runs to validate.
+
+**Note:** The existing `pyproject.toml` package metadata may still display its earlier version; `VERSION` is the release version for v0.2.0 and the package metadata should be synchronized in a later explicitly approved update.

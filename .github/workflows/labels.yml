@@ -1,0 +1,28 @@
+name: Sync issue and agent labels
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/labels.yml
+      - .github/workflows/labels.yml
+permissions:
+  contents: read
+  issues: write
+jobs:
+  sync-labels:
+    runs-on: ubuntu-latest
+    steps:
+      # Чете само конфигурацията на етикетите.
+      - name: Checkout labels
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github/labels.yml
+          persist-credentials: false
+      # Не изтрива другите етикети от GitHub.
+      - name: Sync labels
+        uses: EndBug/label-sync@v2
+        with:
+          config-file: .github/labels.yml
+          delete-other-labels: false
+          dry-run: false

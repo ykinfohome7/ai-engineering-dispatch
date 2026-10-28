@@ -1,0 +1,56 @@
+name: BGDB AI-EMDS Release
+on:
+  push:
+    tags:
+      - 'v*'
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tagged source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Prepare archive and changelog section
+        id: package
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          # Създава архив без .git и без копия на Paperclip submodule.
+          version="${RELEASE_TAG#v}"
+          [[ "$RELEASE_TAG" == v* && "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || {
+            echo 'Expected release tag vX.Y.Z' >&2; exit 1;
+          }
+          [[ "$(cat VERSION)" == "$version" ]] || {
+            echo 'Tag and VERSION mismatch' >&2; exit 1;
+          }
+          stamp="$(date -u +%Y-%m-%d_%H%M)"
+          filename="ai-emds-${version}-${stamp}.zip"
+          git archive --format=zip --prefix='ai-engineering-dispatch/' HEAD -o "$filename"
+          # Извлича бележките само за посочената версия от CHANGELOG.
+          awk -v tag="$version" '
+            $0 ~ /^## \[/ {if (found) exit; if (index($0, "## [" tag "]") == 1) found=1}
+            found {print}
+          ' CHANGELOG.md > release-notes.md
+          [[ -s release-notes.md ]] || { echo 'Missing matching CHANGELOG section' >&2; exit 1; }
+          {
+            echo ''
+            echo 'The ZIP excludes .git metadata and Paperclip submodule contents.'
+            echo 'Clone with --recurse-submodules to obtain the pinned MIT-licensed Paperclip source.'
+          } >> release-notes.md
+          echo "archive=$filename" >> "$GITHUB_OUTPUT"
+      - name: Publish GitHub Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          ARCHIVE: ${{ steps.package.outputs.archive }}
+        run: |
+          # Публикува само при действително създаден git tag.
+          gh release create "$RELEASE_TAG" "$ARCHIVE" \
+            --title "BGDB AI-EMDS $RELEASE_TAG"             --notes-file release-notes.md

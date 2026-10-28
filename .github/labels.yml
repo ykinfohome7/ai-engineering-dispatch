@@ -1,0 +1,37 @@
+# Етикети за задачи, агенти и фази; синхронизацията не трие други етикети.
+- name: task
+  color: "0E8A16"
+  description: "Engineering task / Инженерна задача"
+- name: bug
+  color: "D73A4A"
+  description: "Reproducible defect / Грешка"
+- name: "agent:architect"
+  color: "6F42C1"
+  description: "Architecture / Архитект"
+- name: "agent:developer"
+  color: "1F6FEB"
+  description: "Claude Code developer / Разработчик"
+- name: "agent:codex"
+  color: "0969DA"
+  description: "Codex developer / Втори разработчик"
+- name: "agent:reviewer"
+  color: "8250DF"
+  description: "Independent review / Преглед"
+- name: "agent:qa"
+  color: "FBCA04"
+  description: "QA and tests / Тестове"
+- name: "agent:devops"
+  color: "D93F0B"
+  description: "Infrastructure / Инфраструктура"
+- name: "agent:docs"
+  color: "22863A"
+  description: "Documentation / Документация"
+- name: needs-approval
+  color: "B60205"
+  description: "Explicit human approval / Нужно одобрение"
+- name: phase-1
+  color: "BFD4F2"
+  description: "Codespaces / Етап 1"
+- name: phase-2
+  color: "C5DEF5"
+  description: "Proxmox / Етап 2"
