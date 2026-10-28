@@ -15,7 +15,7 @@ jobs:
     steps:
       # Чете само конфигурацията на етикетите.
       - name: Checkout labels
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           sparse-checkout: .github/labels.yml
           persist-credentials: false
