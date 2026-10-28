@@ -17,7 +17,7 @@ jobs:
       - name: Secret-pattern guard
         shell: bash
         run: |
-          # Проверява файловете ни; не сканира външния submodule или самата CI дефиниция.
+          # Проверява файловете на проекта, без да сканира външния submodule.
           if grep -RInIE --exclude=ci.yml --exclude-dir=.git --exclude-dir=paperclip \
             -e '-----BEGIN (OPENSSH |RSA |EC )?PRIVATE KEY-----' \
             -e 'ghp_[A-Za-z0-9]{12,}' \
@@ -38,7 +38,7 @@ jobs:
       - name: ShellCheck scripts and infrastructure
         shell: bash
         run: |
-          # Проверява скриптовете статично; не изпълнява сървърни операции.
+          # Проверява shell скриптовете статично.
           sudo apt-get update -qq
           sudo apt-get install -y shellcheck
           find scripts infra -type f -name '*.sh' -print0 |
@@ -46,11 +46,9 @@ jobs:
       - name: YAML lint configuration and GitHub files
         shell: bash
         run: |
-          # Проверява YAML синтаксиса, без да включва външния Paperclip.
-          find config .github -type f | grep -E '[.]ya?ml
-      - name: Validate Codespaces JSON
-        run: python3 -m json.tool .devcontainer/devcontainer.json > /dev/null
- |
-            xargs yamllint -d '{extends: relaxed, rules: {line-length: disable, document-start: disable, truthy: disable}}'
+          # Проверява YAML файловете без да изпълнява команди от тях.
+          find config .github -type f -name '*.yml' -print0 > /tmp/bgdb-yaml-files
+          find config .github -type f -name '*.yaml' -print0 >> /tmp/bgdb-yaml-files
+          xargs -0 -a /tmp/bgdb-yaml-files yamllint -d '{extends: relaxed, rules: {line-length: disable, document-start: disable, truthy: disable}}'
       - name: Validate Codespaces JSON
         run: python3 -m json.tool .devcontainer/devcontainer.json > /dev/null
