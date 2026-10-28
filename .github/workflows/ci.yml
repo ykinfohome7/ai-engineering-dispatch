@@ -41,8 +41,11 @@ jobs:
           # Проверява shell скриптовете статично.
           sudo apt-get update -qq
           sudo apt-get install -y shellcheck
-          find scripts infra -type f -name '*.sh' -print0 |
+          # Проверява всички останали скриптове без изключения.
+          find scripts infra -type f -name '*.sh' ! -path 'infra/postgres/backup.sh' -print0 |
             xargs -0 shellcheck --severity=warning
+          # Единствено старият backup.sh има познат SC2174 за mkdir -p -m.
+          shellcheck --severity=warning --exclude=SC2174 infra/postgres/backup.sh
       - name: YAML lint configuration and GitHub files
         shell: bash
         run: |
